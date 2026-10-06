@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Electricity Bill Calculator</title>
+
+<style>
+body{font-family:Arial;background:#eaf6ff;text-align:center;margin:0;padding:30px}
+h1{color:#1765bd;font-size:45px}
+.box{max-width:600px;margin:auto}
+input{width:100%;padding:15px;margin:6px 0;box-sizing:border-box;border:1px solid #ccc;border-radius:10px;font-size:20px}
+button{width:100%;padding:15px;margin-top:10px;background:#176ac1;color:white;border:0;border-radius:10px;font-size:22px;font-weight:bold;cursor:pointer}
+button:hover{background:#0d4f91}
+#result{background:white;margin-top:25px;padding:20px;border-radius:10px;text-align:left;font-size:18px;display:none}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>⚡ Electricity Bill Calculator</h1>
+
+<input id="name" placeholder="Customer Name">
+<input id="id" placeholder="Customer ID">
+<input id="prev" type="number" placeholder="Previous Reading">
+<input id="curr" type="number" placeholder="Current Reading">
+
+<button onclick="calculate()">Calculate Bill</button>
+
+<div id="result"></div>
+
+</div>
+
+<script>
+function calculate(){
+
+let name=document.getElementById("name").value;
+let id=document.getElementById("id").value;
+let prev=Number(document.getElementById("prev").value);
+let curr=Number(document.getElementById("curr").value);
+
+if(name===""||id===""||isNaN(prev)||isNaN(curr)){
+alert("Please enter all details!");
+return;
+}
+
+if(curr<prev){
+alert("Current reading cannot be less than previous reading!");
+return;
+}
+
+let units=curr-prev;
+let charge;
+
+if(units<=100)
+charge=units*3;
+else if(units<=200)
+charge=300+(units-100)*5;
+else if(units<=300)
+charge=800+(units-200)*7;
+else
+charge=1500+(units-300)*10;
+
+let fixed=100;
+let total=charge+fixed;
+
+document.getElementById("result").style.display="block";
+
+document.getElementById("result").innerHTML=
+"<h2>⚡ Electricity Bill</h2>"+
+"Customer Name: <b>"+name+"</b><br><br>"+
+"Customer ID: <b>"+id+"</b><br><br>"+
+"Units Consumed: <b>"+units+" units</b><br><br>"+
+"Energy Charge: <b>₹"+charge+"</b><br><br>"+
+"Fixed Charge: <b>₹"+fixed+"</b><hr>"+
+"<h2>Total Bill: ₹"+total+"</h2>";
+}
+</script>
+
+</body>
+</html>
